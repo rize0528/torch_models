@@ -6,3 +6,4 @@ understand of actual ML model and compare with the implements of the other libra
 | Model Name | Implementation | Compare target |
 | --- | --- | --- |
 | LinearRegression | ./nn_sl/LinearRegression | Scikit learn |
+| LogisticRegression | ./nn_sl/LogisticRegression | - |
