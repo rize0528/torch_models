@@ -2,10 +2,10 @@ import sys
 import argparse
 import models
 import numpy as np
-import torchvision
+import torch
 from torch import Tensor
 from torch.utils.data import DataLoader, Dataset, TensorDataset
-from sklearn.datasets import load_boston
+from sklearn.datasets import load_boston, load_iris
 
 
 def main():
@@ -25,6 +25,17 @@ def main():
         t_y = Tensor(y_train)
         tensor_dataset = TensorDataset(t_x, t_y)
         data_loader = DataLoader(tensor_dataset, batch_size=32)
+        model.run(data_loader, model)
+    elif args.model_name == "LogisticRegression":
+        X_train, y_train = load_iris(return_X_y=True)
+        t_x, t_y = torch.tensor(X_train, dtype=torch.float), torch.tensor(y_train, dtype=torch.long)
+        tensor_dataset = TensorDataset(t_x, t_y)
+
+        num_classes = len(set(y_train))
+        input_dim = X_train.shape[1]
+
+        data_loader = DataLoader(tensor_dataset, batch_size=32, shuffle=True)
+        model = models.LogisticRegression(input_dim, num_classes, learning_rate=0.01)
         model.run(data_loader, model)
 
 
