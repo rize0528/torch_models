@@ -7,3 +7,9 @@ understand of actual ML model and compare with the implements of the other libra
 | --- | --- | --- |
 | LinearRegression | ./nn_sl/LinearRegression | Scikit learn |
 | LogisticRegression | ./nn_sl/LogisticRegression | - |
+
+## How to run
+
+```bash
+python3 run.py -m <Model Name>
+```
