@@ -35,7 +35,7 @@ def main():
         input_dim = X_train.shape[1]
 
         data_loader = DataLoader(tensor_dataset, batch_size=32, shuffle=True)
-        model = models.LogisticRegression(input_dim, num_classes, learning_rate=0.01)
+        model = models.LogisticRegression(input_dim, num_classes, learning_rate=0.01, epoch=1000)
         model.run(data_loader, model)
 
 
