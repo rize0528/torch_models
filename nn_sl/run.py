@@ -1,3 +1,4 @@
+import os
 import sys
 import argparse
 import models
@@ -5,7 +6,11 @@ import numpy as np
 import torch
 from torch import Tensor
 from torch.utils.data import DataLoader, Dataset, TensorDataset
+from torchvision.datasets import MNIST
+from torchvision.transforms import Compose, ToTensor, Normalize
 from sklearn.datasets import load_boston, load_iris
+
+torch.manual_seed(5566)
 
 
 def main():
@@ -37,6 +42,22 @@ def main():
         data_loader = DataLoader(tensor_dataset, batch_size=32, shuffle=True)
         model = models.LogisticRegression(input_dim, num_classes, learning_rate=0.01, epoch=1000)
         model.run(data_loader, model)
+    elif args.model_name == "Convolution2D":
+        n_epoch = 5
+        tr_batch_size, ts_batch_size = 32, 1024
+        data_transform = Compose([ToTensor(), Normalize((0.1307,), (0.3081,))])
+        tr_mnist = MNIST(root=os.path.realpath('../../dataset/mnist'), train=True,
+                         transform=data_transform, download=False)
+        ts_mnist = MNIST(root=os.path.realpath('../../dataset/mnist'), train=False,
+                         transform=data_transform, download=False)
+
+        train_loader = DataLoader(tr_mnist, batch_size=tr_batch_size, shuffle=True)
+        test_loader = DataLoader(ts_mnist, batch_size=ts_batch_size, shuffle=True)
+
+        conv_net = models.Convolution2D(n_epoch=n_epoch, log_per_batch=1000, train_batch_size=tr_batch_size)
+        conv_net.run(train_loader, test_loader)
+
+        # It will select # proportion of training data as validation data.
 
 
 if __name__ == "__main__":

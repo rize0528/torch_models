@@ -38,4 +38,3 @@ class LogisticRegression(Module):
                 wrap_up_conf_mx = np.sum(result_confusion_mx, axis=0)
                 ans = self.metrics(wrap_up_conf_mx)
                 print(f'epoch:{epoch:02d}, accuracy:{ans["accuracy"]:.4f}, loss:{loss.data.item()}')
-        #
